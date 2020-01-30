@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Viljaladu.Models.Auto>
+
+@{
+    ViewBag.Title = "LaosAutod";
+}
+
+<h2>Millist autot välja saadate?</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.autoNr)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sisenemisMass)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.autoNr)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sisenemisMass)
+        </td>
+        <td>
+            @Html.ActionLink("Saada Välja", "PaneLahkumisMass", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
