@@ -9,7 +9,6 @@ namespace Viljaladu.Models
 	public class Auto
 	{
 		public int id { get; set; }
-	
 		public string autoNr { get; set; }
 		[Range(0,500)]
 		public double sisenemisMass { get; set; }

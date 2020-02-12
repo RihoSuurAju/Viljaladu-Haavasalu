@@ -10,6 +10,7 @@ using Viljaladu.Models;
 
 namespace Viljaladu.Controllers
 {
+    [Authorize]
     public class AutodController : Controller
     {
 		private AutoContext db = new AutoContext();
@@ -20,10 +21,30 @@ namespace Viljaladu.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public ActionResult IndexAutod()
+        {
+            return View(db.Autod.ToList());
+        }
+
+        public ActionResult IndexValja()
+        {
+            var model = db.Autod
+                .Where(u => u.lahkumisMass == 0)
+                .ToList();
+            return View(model);
+        }
+
 		public ActionResult LisaSisenevAuto()
 		{
 			return View();
 		}
+
+        public ActionResult AutoDetailid(int id)
+        {
+            var model = db.Autod.Find(id);
+            return View(model);
+        }
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -33,19 +54,10 @@ namespace Viljaladu.Controllers
 			{
 				db.Autod.Add(auto);
 				db.SaveChanges();
-				return RedirectToAction("Index");
+				return RedirectToAction("IndexAutod");
 			}
 			return View();
 		}
-
-		public ActionResult valiLaosAuto()
-		{
-			var model = db.Autod
-				.Where(u => u.lahkumisMass == 0)
-				.ToList();
-			return View(model);
-		}
-
 
 		public ActionResult PaneLahkumisMass(int? id)
 		{
@@ -58,18 +70,19 @@ namespace Viljaladu.Controllers
 			{
 				return HttpNotFound();
 			}
+            ViewBag.autonr = auto.autoNr;
 			return View(auto);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public ActionResult PaneLahkumisMass([Bind(Include = "Id, lahkumisMass")] Auto auto)
+		public ActionResult PaneLahkumisMass(Auto auto)
 		{
 			if (ModelState.IsValid)
 			{
 				db.Entry(auto).State = EntityState.Modified;
 				db.SaveChanges();
-				return RedirectToAction("valiLaosAuto");
+				return RedirectToAction("IndexValja");
 			}
 			return View();
 		}

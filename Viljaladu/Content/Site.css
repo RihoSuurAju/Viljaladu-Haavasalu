@@ -1,7 +1,18 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: rgba(109, 150, 77, 0.4);
+    background-color: rgba(109, 150, 77, 0.8);
+    font: comic-sans;
+}
+
+.navbar {
+    background-color: rgba(66, 179, 255, 0.678);
+    border: 0;
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #f5fff9;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -24,13 +35,17 @@ textarea {
     max-width: 280px;
 }
 
-.big-box {
-    background-color: #;
-}
-
 .layout-logo {
     background: url("../images/Viljaladu_logo_transparent.png") no-repeat top left;
     width:50px;
     height:50px;
     background-size:100%;
+}
+
+td, tr {
+    border-color: #486632!important;
+}
+
+input[type=text], input[type=password] {
+    border: 2px solid #855f00;
 }

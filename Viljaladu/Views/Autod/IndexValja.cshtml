@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Viljaladu.Models.Auto>
 
 @{
-    ViewBag.Title = "LaosAutod";
+    ViewBag.Title = "Index2";
 }
 
-<h2>Millist autot välja saadate?</h2>
+<h2>Saada auto välja</h2>
 
 <table class="table">
     <tr>
@@ -13,6 +13,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.sisenemisMass)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.lahkumisMass)
         </th>
         <th></th>
     </tr>
@@ -26,7 +29,10 @@
             @Html.DisplayFor(modelItem => item.sisenemisMass)
         </td>
         <td>
-            @Html.ActionLink("Saada Välja", "PaneLahkumisMass", new { id=item.id })
+            @Html.DisplayFor(modelItem => item.lahkumisMass)
+        </td>
+        <td>
+            @Html.ActionLink("Saada välja", "PaneLahkumisMass", new { id=item.id })
         </td>
     </tr>
 }
