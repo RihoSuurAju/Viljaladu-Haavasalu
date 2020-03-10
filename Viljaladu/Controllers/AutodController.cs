@@ -40,10 +40,24 @@ namespace Viljaladu.Controllers
 			return View();
 		}
 
-        public ActionResult AutoDetailid(int id)
-        {
-            var model = db.Autod.Find(id);
-            return View(model);
+		[HttpGet]
+		[AllowAnonymous]
+		public ActionResult AutoDetailid(int id)
+		{
+			var model = db.Autod
+				.Where(u => u.id == id)
+				.ToList();
+			var query = from u in db.Autod
+						where u.id == id
+						select new { u.autoNr };
+			string autoNr = query.FirstOrDefault().ToString();
+			System.Diagnostics.Debug.WriteLine("HELLO! autonr is: ", autoNr);
+			var autod = db.Autod.Where(u => u.autoNr == autoNr).ToList();
+			double mass = 0;
+			autod.ForEach(u => mass += u.sisenemisMass - u.lahkumisMass);
+			System.Diagnostics.Debug.WriteLine("[HELLO!] MASS IS: ", mass);
+			TempData["var"] = mass;
+			return View(model);
         }
 
 		[HttpPost]
