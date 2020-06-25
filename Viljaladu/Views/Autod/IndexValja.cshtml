@@ -1,23 +1,21 @@
 ﻿@model IEnumerable<Viljaladu.Models.Auto>
 
-@{
-    ViewBag.Title = "Index2";
-}
-
 <h2>Saada auto välja</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.autoNr)
+            <b>Auto Number</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.sisenemisMass)
+            <b>Sisenemismass</b>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lahkumisMass)
+            <b>Lahkumismass</b>
         </th>
-        <th></th>
+        <th>
+
+        </th>
     </tr>
 
 @foreach (var item in Model) {

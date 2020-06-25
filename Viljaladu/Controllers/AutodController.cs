@@ -15,10 +15,9 @@ namespace Viljaladu.Controllers
     {
 		private AutoContext db = new AutoContext();
 
-        // GET: SisenevadAutod
         public ActionResult Index()
         {
-            return View();
+            return View(db.Autod.ToList());
         }
 
         [AllowAnonymous]
@@ -42,25 +41,25 @@ namespace Viljaladu.Controllers
 
 		[HttpGet]
 		[AllowAnonymous]
-		public ActionResult AutoDetailid(int id)
+		public ActionResult AutoDetailid(int? id)
 		{
-			var model = db.Autod
-				.Where(u => u.id == id)
-				.ToList();
-			var query = from u in db.Autod
-						where u.id == id
-						select new { u.autoNr };
-			string autoNr = query.FirstOrDefault().ToString();
-			System.Diagnostics.Debug.WriteLine("HELLO! autonr is: ", autoNr);
-			var autod = db.Autod.Where(u => u.autoNr == autoNr).ToList();
-			double mass = 0;
-			autod.ForEach(u => mass += u.sisenemisMass - u.lahkumisMass);
-			System.Diagnostics.Debug.WriteLine("[HELLO!] MASS IS: ", mass);
-			TempData["var"] = mass;
-			return View(model);
+            var autoNr = db.Autod
+            .Where(u => u.id == id)
+            .ToList()
+            .Select(u => u.autoNr)
+            .SingleOrDefault();
+
+            var autod = db.Autod.Where(u => u.autoNr == autoNr).ToList();
+            double mass = 0;
+            autod.ForEach(u => mass += u.sisenemisMass);
+
+            TempData["mass"] = mass;
+
+            return View(autod);
+
         }
 
-		[HttpPost]
+        [HttpPost]
 		[ValidateAntiForgeryToken]
 		public ActionResult LisaSisenevAuto([Bind(Include = "Id, sisenemisMass, autoNr")] Auto auto)
 		{
