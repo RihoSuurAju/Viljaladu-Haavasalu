@@ -51,7 +51,7 @@ namespace Viljaladu.Controllers
 
             var autod = db.Autod.Where(u => u.autoNr == autoNr).ToList();
             double mass = 0;
-            autod.ForEach(u => mass += u.sisenemisMass);
+            autod.ForEach(u => mass += u.sisenemisMass - u.lahkumisMass);
 
             TempData["mass"] = mass;
 
